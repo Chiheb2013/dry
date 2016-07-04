@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometry\Frame.cs" />
     <Compile Include="Materials\BasicMaterialProperties.cs" />
     <Compile Include="Scene\Camera.cs" />
     <Compile Include="Maths\Color.cs" />

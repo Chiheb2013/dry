@@ -22,7 +22,7 @@ namespace dry
             SceneObject s1 = new SceneObject(new Sphere(50, new Vector3D(50, 0, 100)), red);
             SceneObject s2 = new SceneObject(new Sphere(50, new Vector3D(0, 0, 100)), white);
             SceneObject s3 = new SceneObject(new Sphere(50, new Vector3D(-50, 0, 100)), blue);
-            BasicMaterialProperties bmp4 = new BasicMaterialProperties(Color.White, 0.2f, 0.8f);
+            BasicMaterialProperties bmp4 = new BasicMaterialProperties(Color.White, 0, 1);
             Material green = new Material(bmp4, true, world);
             SceneObject pl = new SceneObject(new Plane(new Vector3D(0, 0, 160), new Vector3D(0, 1, 1)), green);
 
