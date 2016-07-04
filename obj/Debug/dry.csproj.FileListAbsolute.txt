@@ -1,0 +1,6 @@
+C:\Users\Chibou\Documents\ray_tracer_self\dry\bin\Debug\dry.exe.config
+C:\Users\Chibou\Documents\ray_tracer_self\dry\bin\Debug\dry.exe
+C:\Users\Chibou\Documents\ray_tracer_self\dry\bin\Debug\dry.pdb
+C:\Users\Chibou\Documents\ray_tracer_self\dry\obj\Debug\dry.csprojResolveAssemblyReference.cache
+C:\Users\Chibou\Documents\ray_tracer_self\dry\obj\Debug\dry.exe
+C:\Users\Chibou\Documents\ray_tracer_self\dry\obj\Debug\dry.pdb
