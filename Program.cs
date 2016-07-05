@@ -10,8 +10,8 @@ namespace dry
     {
         static void Main(string[] args)
         {
-            Camera camera = new Camera(100f, ToRadians(60), ToRadians(60), 1490, 960, 2);
-            World world = new World(camera);
+            Camera camera = new Camera(ToRadians(30f), -ToRadians(10f), new Vector3D(100, 100, 0));
+            World world = new World(camera, new Viewport(640, 468));
 
             BasicMaterialProperties bmp1 = new BasicMaterialProperties(Color.Red, 0.2f, 0.8f);
             BasicMaterialProperties bmp2 = new BasicMaterialProperties(Color.Blue, 0.2f, 0.8f);
@@ -32,7 +32,7 @@ namespace dry
             world.AddSceneObject(s3);
             world.AddSceneObject(pl);
 
-            world.Render().Save("rendered.png");
+            world.Render().Save("rendered3.png");
         }
 
         private static float ToRadians(float deg)

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace dry
 {
-    class Frame : Geometry
+    enum Axis
     {
-        Plane plane;
-
+        X,
+        Y,
+        Z
     }
 }
