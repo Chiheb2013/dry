@@ -42,7 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometry\CircularFrame.cs" />
     <Compile Include="Materials\BasicMaterialProperties.cs" />
+    <Compile Include="Maths\Axis.cs" />
+    <Compile Include="Maths\Matrix.cs" />
+    <Compile Include="Maths\Vector4D.cs" />
     <Compile Include="Scene\Camera.cs" />
     <Compile Include="Maths\Color.cs" />
     <Compile Include="Geometry\Geometry.cs" />

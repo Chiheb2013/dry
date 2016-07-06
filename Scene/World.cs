@@ -12,15 +12,17 @@ namespace dry
         const int maxDepth = 2;
 
         Camera camera;
+        Viewport viewport;
 
         List<SceneObject> sceneObjects;
         List<Light> lights;
 
         public List<Light> Lights { get { return lights; } }
 
-        public World(Camera camera)
+        public World(Camera camera, Viewport viewport)
         {
             this.camera = camera;
+            this.viewport = viewport;
             this.lights = new List<Light>();
             this.sceneObjects = new List<SceneObject>();
         }
@@ -37,20 +39,15 @@ namespace dry
         
         public Bitmap Render()
         {
-            Bitmap image = new Bitmap(camera.Viewport.Width, camera.Viewport.Height);
-            Vector3D direction = new Vector3D(0, 0, 1);
+            Bitmap image = new Bitmap(viewport.Width, viewport.Height);
 
-            for (int y = 0; y < camera.Viewport.Height; y++)
-                for (int x = 0; x < camera.Viewport.Width; x++)
+            for (int y = 0; y < viewport.Height; y++)
+                for (int x = 0; x < viewport.Width; x++)
                 {
-                    Vector3D origin = new Vector3D(
-                        camera.Viewport.Scaling*((float)x + 0.5f - (float)camera.Viewport.Width / 2f),
-                        camera.Viewport.Scaling*((float)y + 0.5f - (float)camera.Viewport.Height / 2f),
-                        0f);
-                    Ray r = new Ray(origin, direction);
+                    Ray r = camera.ShootRay(viewport, x, y);
 
                     Color color = TraceRay(r,1);
-                    image.SetPixel(x, camera.Viewport.Height - y - 1, color.ToRGB());
+                    image.SetPixel(x, viewport.Height - y - 1, color.ToRGB());
                 }
 
             return image;

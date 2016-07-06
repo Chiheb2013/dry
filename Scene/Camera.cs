@@ -8,55 +8,58 @@ namespace dry
 {
     class Camera
     {
-        float alpha;    //horizontal fov angle
-        float beta;     //vertical fov angle
-        float distance;
+        //coordinate system is as follows :
+        //    y
+        //    |__x
+        //   /
+        //  z
+        Vector3D position;
+        Vector3D forward; //direction of rays
+        float alpha; //rotation about X axis
+        float beta; //rotation about Y axis
 
-        Viewport viewport;
-
-        public Viewport Viewport { get { return viewport; } }
-
-        public Vector3D Position
-        {
-            get
-            {
-                return new Vector3D(0, 0, distance);
-            }
-        }
-
-        public Camera(float distance, float alpha, float beta, int width, int height)
+        public Camera(float alpha, float beta, Vector3D position)
         {
             this.alpha = alpha;
             this.beta = beta;
-            this.distance = distance;
-
-            this.viewport = GetViewport(width, height);
+            this.position = position;
+            this.forward = ComputeForward();
         }
 
-        public Camera(float distance, float alpha, float beta, int width, int height, float zoom)
+        public Camera(float alpha, float beta, float zoom, Vector3D position)
         {
             this.alpha = alpha;
             this.beta = beta;
-            this.distance = distance;
-
-            this.viewport = GetViewport(width, height, zoom);
+            this.position = position;
+            this.forward = ComputeForward();
         }
 
-        private Viewport GetViewport(int width, int height)
+        private Vector3D ComputeForward()
         {
-            Vector3D hdelta = new Vector3D(distance * (float)Math.Tan(alpha), 0, 0);
-            Vector3D vdelta = new Vector3D(0, distance * (float)Math.Tan(beta), 0);
+            Matrix RX = Matrix.CreateRotationMatrix(Axis.X, alpha);
+            Matrix RY = Matrix.CreateRotationMatrix(Axis.Y, beta);
+            Matrix R = RX * RY;
+            Vector4D dir = new Vector4D(new Vector3D(0, 0, 1));
 
-            Vector3D topLeft = vdelta - hdelta;
-            Vector3D bottomRight = hdelta - vdelta;
-
-            return new Viewport(width, height, topLeft, bottomRight);
+            return (R * dir).Vect3D;
         }
 
-        private Viewport GetViewport(int width, int height, float zoom)
+        public Ray ShootRay(Viewport viewport, int x, int y)
         {
-            var v = GetViewport(width, height);
-            return new Viewport(v.Width, v.Height, zoom, v.TopLeft, v.BottomRight);
+            Vector3D origin = new Vector3D(
+                viewport.Scaling * ((float)x + 0.5f - (float)viewport.Width / 2f),
+                viewport.Scaling * ((float)y + 0.5f - (float)viewport.Height / 2f),
+                0f);
+            Vector4D P = new Vector4D(origin);
+
+            Matrix RX = Matrix.CreateRotationMatrix(Axis.X, alpha);
+            Matrix RY = Matrix.CreateRotationMatrix(Axis.Y, beta);
+            Matrix R = RX * RY;
+
+            Matrix T = Matrix.CreateTranslationMatrix(position);
+
+            Vector4D realOrigin = (T * R) * P;
+            return new Ray(realOrigin.Vect3D, forward);
         }
     }
 }
